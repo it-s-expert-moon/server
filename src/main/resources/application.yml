@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: expert_moon
+  data:
+    mongodb:
+      uri: mongodb://root:1234@localhost:27017/expert_moon?authSource=admin
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: logo3574@gmail.com
+    password: ujqgblmkwlqkknem
+    properties:
+      mail:
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
+jwt:
+  header: Authorization
+  secret: 77+977+977+977+977+9JFEiR++/vXfvv73vv73erVvvv71zSO+/vXLVu++/ve+/ve+/vXPvv71o77+9Ku+/ve+/vXTvv70k77+9Z++/vXpETTQlezPvv714N++/vVki77+977+9JQ==
+  refresh-token-expires-time: 2592000000
+  access-token-expires-time: 3600000
+image:
+  folder: /Users/dgsw8th11/expert_moon/image
