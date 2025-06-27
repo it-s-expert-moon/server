@@ -21,7 +21,7 @@ import java.security.Principal
 import java.util.*
 
 @Service
-class PostService(val postRepository: PostRepository, val userRepository: UserRepository, val imageRepository: ImageRepository, val likeRepository: LikeRepository, val mongoTemplate: MongoTemplate) {
+class PostService(val postRepository: PostRepository, val userRepository: UserRepository, val imageRepository: ImageRepository, val likeRepository: LikeRepository, val mongoTemplate: MongoTemplate, val userService: UserService) {
     fun post(request: PostRequest, principal: Principal) {
         val userId = principal.name
         val user = userRepository.findUserById(userId) ?: throw CustomException(ExceptionState.BAD_REQUST)
@@ -33,6 +33,7 @@ class PostService(val postRepository: PostRepository, val userRepository: UserRe
                 images = request.images,
                 category = request.category
         ))
+        userService.getExp(user, 20)
     }
     fun home(principal: Principal): List<PostResponse> {
         val userId = principal.name
@@ -130,6 +131,8 @@ class PostService(val postRepository: PostRepository, val userRepository: UserRe
                 userId = userId,
                 postId = request.postId
         ))
+        val user = userRepository.findUserById(postRepository.findPostById(request.postId)!!.userId) // tlqkf
+        userService.getExp(user!!, 10)
     }
     fun unlike(request: LikeRequest, principal: Principal) {
         val userId = principal.name

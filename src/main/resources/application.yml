@@ -23,3 +23,5 @@ jwt:
   access-token-expires-time: 3600000
 image:
   folder: /Users/dgsw8th11/expert_moon/image
+server:
+  port: 4567

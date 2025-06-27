@@ -2,12 +2,15 @@ package gain.moon.expert_moon.controller
 
 import gain.moon.expert_moon.dto.request.FollowRequest
 import gain.moon.expert_moon.dto.request.ProfilePatchRequest
+import gain.moon.expert_moon.dto.response.UserResponse
 import gain.moon.expert_moon.service.UserService
 import gain.moon.expert_moon.util.ResponseFormat
 import gain.moon.expert_moon.util.ResponseFormatBuilder
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -31,5 +34,10 @@ class UserController(val userService: UserService) {
     fun unfollow(@RequestBody @Valid request: FollowRequest, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
         userService.unfollow(request, principal)
         return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.noData())
+    }
+    @GetMapping("/{id}")
+    fun getProfile(@PathVariable id: String): ResponseEntity<ResponseFormat<UserResponse>> {
+        val result = userService.getProfile(id)
+        return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.build(result))
     }
 }

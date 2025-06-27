@@ -1,6 +1,7 @@
 package gain.moon.expert_moon.controller
 
 import gain.moon.expert_moon.dto.request.CheckEmailRequest
+import gain.moon.expert_moon.dto.request.LikeRequest
 import gain.moon.expert_moon.dto.request.PostRequest
 import gain.moon.expert_moon.dto.response.PostResponse
 import gain.moon.expert_moon.service.PostService
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -28,5 +30,16 @@ class PostController(val postService: PostService) {
     fun home(principal: Principal): ResponseEntity<ResponseFormat<List<PostResponse>>> {
         val result = postService.home(principal)
         return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.build(result))
+    }
+
+    @PostMapping("/like")
+    fun like(request: LikeRequest, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
+        postService.like(request, principal)
+        return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.noData())
+    }
+    @PostMapping("/unlike")
+    fun unlike(request: LikeRequest, principal: Principal): ResponseEntity<ResponseFormat<Any>> {
+        postService.unlike(request, principal)
+        return ResponseEntity.ok(ResponseFormatBuilder { message = "success" }.noData())
     }
 }
